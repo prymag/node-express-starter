@@ -1,5 +1,6 @@
 import express from "express";
-import MongooseDB from './db/mongoose';
+import routes from './route-loader';
+import {MongooseDB} from './db/mongoose';
 
 const app = express();
 const port = 3000;
@@ -14,9 +15,9 @@ const db = new MongooseDB(dbConStr, dbOpts);
 
 db.start()
 .then((res) => {
-    app.get('/', (req, res) => res.send('Hello World!'))
-    app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
+    routes.load(app);
+    app.get('/', (req, res) => res.send('Hello World!'));
+    app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
 }).catch (err => {
-    console.log('Error');
-}) 
-
+    console.log('Error:' + err);
+});
