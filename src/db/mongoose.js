@@ -29,7 +29,7 @@ class MongooseDB {
 
         callback();
         return Promise.reject('Not connected');
-    };
+    }
 }
 
-export default MongooseDB;
+export {MongooseDB};
