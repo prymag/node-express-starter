@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "baseUrl": "./src",
+        "paths": {
+            "@libs/*": ["./src/libs/*"],
+            "@configs/*": ["./src/configs/*"],
+            "@helpers/*": ["./src/helpers/*"],
+            "@modules/*": ["./src/modules/*"],
+            "@middlewares/*": ["./src/middlewares/*"]
+        }
+    },
+    "exclude": ["node_modules", "**/node_modules/*"]
+}
