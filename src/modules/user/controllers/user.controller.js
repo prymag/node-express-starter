@@ -11,12 +11,12 @@ class UserController {
         return res.send('test');
     }
 
-    store(req, res) {
+    store(req, res, next) {
         //
-        return this._service
+        this._service
             .save(req.body)
-            .then(result => res.send(result))
-            .catch(err => res.send(err));
+            .then(success => res.send(success))
+            .catch(fail => next(fail));   
     }
 
     show(req, res) {
