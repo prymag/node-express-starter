@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import uniqueValidator from 'mongoose-unique-validator';
+
 const Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
@@ -8,6 +11,20 @@ let UserSchema = new Schema({
     lastname    : { type: String },
     email       : { type: String, required: true},
 });
+
+
+UserSchema.post('save', (user, next) => {
+    //
+    bcrypt.genSalt(3)
+        .then((salt) => bcrypt.hash(user.password, salt))
+        .then((hash) => {
+            user.password = hash;
+            user.save();
+            next();
+        }).catch((error) => next(error));
+});
+
+UserSchema.plugin(uniqueValidator);
 
 // Export the model
 export default mongoose.model('User', UserSchema);
