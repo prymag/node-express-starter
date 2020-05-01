@@ -1,5 +1,4 @@
-
-function created(res, data, msg, statusCode) {
+function success(res, data, msg, statusCode = 200) {
     const response ={
         success: true,
         message: msg,
@@ -9,7 +8,6 @@ function created(res, data, msg, statusCode) {
     if (statusCode) {
         res.status(statusCode);
     }
-
 
     return res.json(response);
 }
@@ -28,4 +26,4 @@ function failed(res, data, msg, statusCode = 500) {
     return res.json(response);
 }
 
-export {created, failed};
+export {success, failed};

@@ -1,10 +1,15 @@
 import Service from '../services/user.service';
+import * as response from "../../../libs/response/response";
+
 
 class UserController {
 
     constructor() {
         this._service = new Service();
+
         this.store = this.store.bind(this);
+        this.update = this.update.bind(this);
+        this.show = this.show.bind(this);
     }
 
     index(req, res) {
@@ -19,12 +24,20 @@ class UserController {
             .catch(fail => next(fail));   
     }
 
-    show(req, res) {
-
+    show(req, res, next) {
+        //
+        this._service
+            .get(req.params.id)
+            .then(data => response.success(res, data, 'Success'))
+            .catch(err => next(err));
     }
 
-    update(req, res) {
-
+    update(req, res, next) {
+        //
+        this._service
+            .update(req.params.id, req.body)
+            .then(data => response.success(res, data, 'Success'))
+            .catch(err => next(err));
     }
 
     delete(req, res) {
