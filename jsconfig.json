@@ -2,13 +2,11 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es6",
-        "baseUrl": "./src",
+        "baseUrl": ".",
         "paths": {
-            "@libs/*": ["./src/libs/*"],
-            "@configs/*": ["./src/configs/*"],
-            "@helpers/*": ["./src/helpers/*"],
-            "@modules/*": ["./src/modules/*"],
-            "@middlewares/*": ["./src/middlewares/*"]
+            "@libs/*": ["src/libs/*"],
+            "@middlewares/*": ["src/middlewares"],
+            "@modules": ["src/modules"]
         }
     },
     "exclude": ["node_modules", "**/node_modules/*"]
