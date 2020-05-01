@@ -12,7 +12,8 @@ const dbConStr = 'mongodb://localhost:27017/prymag-timetracker';
 const dbOpts = {
     useNewUrlParser: true, 
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
 };
 const db = new MongooseDB(dbConStr, dbOpts);
 
