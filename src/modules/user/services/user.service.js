@@ -6,6 +6,8 @@ class UserService {
 
     constructor() {
         this.save = this.save.bind(this);
+
+        this._model = UserModel;
     }
 
     hashPassword(body) {
@@ -29,19 +31,19 @@ class UserService {
         const {query, limit, page} = mqpp(queryParams, mqpOpts);
         const opts = {limit, page};
 
-        return UserModel.paginate(query, opts);
+        return this._model.paginate(query, opts);
     }
 
     get(id) {
         //
-        return UserModel.findById(id, '-password');
+        return this._model.findById(id, '-password');
     }
 
     save(body) {
         //
         return this.hashPassword(body)
             .then(newBody =>{
-                let model = new UserModel(newBody);
+                let model = new this._model(newBody);
                 return model.save();
             })
             .then((user) => Promise.resolve(user));
@@ -58,11 +60,11 @@ class UserService {
         };
         
         return this.hashPassword(body)
-            .then(newBody => UserModel.findByIdAndUpdate(id, newBody, opts));
+            .then(newBody => this._model.findByIdAndUpdate(id, newBody, opts));
     }
 
     delete(id) {
-        return UserModel.deleteOne({_id: id});
+        return this._model.deleteOne({_id: id});
     }
 
 }
