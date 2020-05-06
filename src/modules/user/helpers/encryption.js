@@ -30,7 +30,7 @@ function encrypt(str, fieldName = 'password') {
     }
 
     return bcrypt.genSalt(SALT_ROUNDS)
-        .then((salt) => bcrypt.hash(password, salt))
+        .then((salt) => bcrypt.hash(str, salt))
         .then((hash) => Promise.resolve(hash));
 }
 
