@@ -61,6 +61,10 @@ class UserService {
             .then(newBody => UserModel.findByIdAndUpdate(id, newBody, opts));
     }
 
+    delete(id) {
+        return UserModel.deleteOne({_id: id});
+    }
+
 }
 
 export default UserService;

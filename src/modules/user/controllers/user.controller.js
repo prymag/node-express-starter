@@ -11,6 +11,7 @@ class UserController {
         this.store = this.store.bind(this);
         this.update = this.update.bind(this);
         this.show = this.show.bind(this);
+        this.delete = this.delete.bind(this);
     }
 
     index(req, res, next) {
@@ -45,8 +46,12 @@ class UserController {
             .catch(err => next(err));
     }
 
-    delete(req, res) {
-
+    delete(req, res, next) {
+        //
+        this._service
+            .delete(req.id)
+            .then(data => response.success(res, data, 'Success'))
+            .catch(err => next(err)); 
     }
 
 }
