@@ -79,4 +79,4 @@ function mqpp(queryParams, opts) {
     };
 }
 
-export { getSimpleSearch, mqpp };
+export { mqpp };
