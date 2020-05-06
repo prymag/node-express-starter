@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import uniqueValidator from 'mongoose-unique-validator';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 const Schema = mongoose.Schema;
 
@@ -17,7 +18,9 @@ const UserSchema = new Schema({
     email       : { type: String, required: true, index: {unique: true}, validate: emailValidator},
 });
 
+UserSchema.index({username: 'text', firstname: 'text', lastname: 'text', email: 'text'});
 UserSchema.plugin(uniqueValidator);
+UserSchema.plugin(mongoosePaginate);
 
 // Export the model
 export default mongoose.model('User', UserSchema);

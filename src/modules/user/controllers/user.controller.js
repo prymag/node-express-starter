@@ -7,13 +7,18 @@ class UserController {
     constructor() {
         this._service = new Service();
 
+        this.index = this.index.bind(this);
         this.store = this.store.bind(this);
         this.update = this.update.bind(this);
         this.show = this.show.bind(this);
     }
 
-    index(req, res) {
-        return res.send('test');
+    index(req, res, next) {
+        //
+        this._service
+            .all(req.query)
+            .then(success => response.success(res, success))
+            .catch(fail => next(fail));
     }
 
     store(req, res, next) {

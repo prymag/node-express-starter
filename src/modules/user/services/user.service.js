@@ -1,5 +1,6 @@
 import UserModel from '../models/user.model';
 import hash from '../helpers/hasher';
+import { mqpp } from "@libs/mongoose-query-parser/mongoose-query-parser";
 
 class UserService {
 
@@ -20,8 +21,15 @@ class UserService {
         return Promise.resolve(body);
     }
 
-    all() {
-        
+    all(queryParams) {
+        //
+        const mqpOpts = {
+            fields_to_search: ['username', 'firstname', 'lastname', 'email'],
+        };
+        const {query, limit, page} = mqpp(queryParams, mqpOpts);
+        const opts = {limit, page};
+
+        return UserModel.paginate(query, opts);
     }
 
     get(id) {
