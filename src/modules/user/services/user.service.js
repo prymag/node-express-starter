@@ -1,5 +1,5 @@
 import UserModel from '../models/user.model';
-import hash from '../helpers/hasher';
+import { encrypt } from '../helpers/encryption';
 import { mqpp } from "@libs/mongoose-query-parser/mongoose-query-parser";
 
 class UserService {
@@ -11,7 +11,7 @@ class UserService {
     hashPassword(body) {
         //
         if (body && body.hasOwnProperty('password')) {
-            return hash(body.password)
+            return encrypt(body.password)
                 .then(pass => {
                     body.password = pass;
                     return Promise.resolve(body);

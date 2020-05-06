@@ -3,28 +3,28 @@ import { Error } from "mongoose";
 import UserModel from '../models/user.model';
 
 const SALT_ROUNDS = 3;
-const MIN_PASSWORD = 6;
+const MIN_LENGTH = 6;
 
-function validatePassword(password) {
+function validateStr(str, fieldName) {
     //
-    if (password.length > MIN_PASSWORD) {
+    if (str.length > MIN_LENGTH) {
         return;
     }
 
     const error = new Error.ValidationError(new UserModel());
     const errObj = {
         type:'length', 
-        path:'password', 
-        message: `Password should be atleast ${MIN_PASSWORD} characters.`
+        path:fieldName, 
+        message: `The \`${fieldName}\` field should be atleast ${MIN_LENGTH} characters.`
     };
 
     error.errors.password = new Error.ValidatorError(errObj);
     return error;
 }   
 
-function hash(password) {
+function encrypt(str, fieldName = 'password') {
     //
-    const isValid = validatePassword(password);
+    const isValid = validateStr(str, fieldName);
     if (isValid instanceof Error.ValidationError) {
         return Promise.reject(isValid);
     }
@@ -34,4 +34,8 @@ function hash(password) {
         .then((hash) => Promise.resolve(hash));
 }
 
-export default hash;
+function decrypt(hash, str) {
+    return bcrypt.compare(hash, str);
+}
+
+export { encrypt, decrypt };
