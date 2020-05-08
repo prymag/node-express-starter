@@ -34,8 +34,8 @@ function encrypt(str, fieldName = 'password') {
         .then((hash) => Promise.resolve(hash));
 }
 
-function decrypt(hash, str) {
-    return bcrypt.compare(hash, str);
+function compare(hash, str) {
+    return bcrypt.compare(str, hash);
 }
 
-export { encrypt, decrypt };
+export { encrypt, compare };
