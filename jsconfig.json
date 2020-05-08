@@ -5,8 +5,8 @@
         "baseUrl": ".",
         "paths": {
             "@libs/*": ["src/libs/*"],
-            "@middlewares/*": ["src/middlewares"],
-            "@modules": ["src/modules"]
+            "@middlewares/*": ["src/middlewares/*"],
+            "@modules/*": ["src/modules/*"]
         }
     },
     "exclude": ["node_modules", "**/node_modules/*"]
