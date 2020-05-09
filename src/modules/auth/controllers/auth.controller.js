@@ -1,4 +1,4 @@
-import * as response from "@libs/response/response";
+import * as response from "@framework/libs/response/response";
 import AuthService from '../services/auth.service';
 import jwt from 'jsonwebtoken';
 
@@ -30,6 +30,8 @@ class AuthController {
                 delete user.password;
 
                 const token = jwt.sign(user, 'secret');
+                res.cookie('token', token, {httpOnly: true});
+
                 return res.json({user, token});
             })
             .catch(err => next(err));
