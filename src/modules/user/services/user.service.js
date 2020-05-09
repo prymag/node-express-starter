@@ -1,5 +1,5 @@
-import UserModel from '../models/user.model';
-import { encrypt } from '../helpers/encryption';
+import UserModel from "@framework/models/user.model";
+import { encrypt } from '@framework/libs/encryption/encryption';
 import { mqpp } from "@framework/libs/mongoose-query-parser/mongoose-query-parser";
 
 class UserService {

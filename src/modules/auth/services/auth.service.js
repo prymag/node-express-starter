@@ -1,4 +1,5 @@
-import { UserService, UserHelper } from "@modules/user/user";
+import { UserService } from "@modules/user/user";
+import { compare } from "@framework/libs/encryption/encryption";
 
 class AuthService extends UserService {
 
@@ -20,7 +21,7 @@ class AuthService extends UserService {
             return Promise.reject('User not found');
         }
         
-        return UserHelper.compare(user.password, password)
+        return compare(user.password, password)
             .then(result => {
                 console.log(result);
                 return result ? Promise.resolve(user) : Promise.reject('User not found');

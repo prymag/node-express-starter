@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { Error } from "mongoose";
-import UserModel from '../models/user.model';
+import UserModel from '../../models/user.model';
 
 const SALT_ROUNDS = 3;
 const MIN_LENGTH = 6;
