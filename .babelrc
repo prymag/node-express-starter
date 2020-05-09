@@ -5,6 +5,7 @@
       "root": ["./src"],
       "alias": {
         "@libs": "./src/libs",
+        "@framework": "./src/framework",
         "@middlewares": "./src/middlewares",
         "@modules": "./src/modules"
       }

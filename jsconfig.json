@@ -6,6 +6,7 @@
         "paths": {
             "@libs/*": ["src/libs/*"],
             "@middlewares/*": ["src/middlewares/*"],
+            "@framework/*": ["src/framework/*"],
             "@modules/*": ["src/modules/*"]
         }
     },

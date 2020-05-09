@@ -1,7 +1,7 @@
 import express from "express";
 import routes from './route-loader';
 import {MongooseDB} from './db/mongoose';
-import { ErrorHandler } from "./middlewares/error-handler";
+import { ErrorHandler } from "@framework/middlewares/error-handler";
 
 const app = express();
 const port = 3000;
