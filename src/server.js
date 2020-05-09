@@ -1,12 +1,14 @@
 import express from "express";
 import routes from './route-loader';
-import {MongooseDB} from './db/mongoose';
+import { MongooseDB } from './db/mongoose';
 import { ErrorHandler } from "@framework/middlewares/error-handler";
+import cookieparser from "cookie-parser";
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(cookieparser());
 
 const dbConStr = 'mongodb://localhost:27017/prymag-timetracker';
 const dbOpts = {
