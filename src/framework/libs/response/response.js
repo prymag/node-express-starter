@@ -5,9 +5,11 @@ function success(res, data, msg, statusCode = 200) {
         data: data,
     };
 
-    if (statusCode) {
-        res.status(statusCode);
+    if (!statusCode) {
+        statusCode = 200;
     }
+
+    res.status(statusCode);
 
     return res.json(response);
 }
@@ -19,9 +21,11 @@ function failed(res, data, msg, statusCode = 500) {
         data: data,
     };
 
-    if(statusCode) {
-        res.status(statusCode);
+    if (!statusCode) {
+        statusCode = 500;
     }
+
+    res.status(statusCode);
 
     return res.json(response);
 }

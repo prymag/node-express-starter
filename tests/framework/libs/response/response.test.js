@@ -2,9 +2,7 @@ import { failed, success } from "@framework/libs/response/response";
 
 
 describe('Lib/response', () =>{
-
-    
-    
+    //
     it('Should be success', () => {
         //
         const expected = {
@@ -79,6 +77,19 @@ describe('Lib/response', () =>{
 
         expect(res.status).toHaveBeenCalled();
         expect(res.status).toHaveBeenCalledWith(404);
+    });
+
+    it('Should correct status codes', () => {
+        //
+        const res = {};
+        res.status = jest.fn();
+        res.json = jest.fn();
+
+        success(res, {}, 'Any Message', 0);
+        expect(res.status).toHaveBeenCalledWith(200);
+
+        failed(res, {}, 'Anything', 0);
+        expect(res.status).toHaveBeenCalledWith(500);
     });
 
 });
