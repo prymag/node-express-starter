@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const SECRET_KEY = 'secret_key';
+const SECRET_KEY = process.env.JWT_SECRET || 'jwtsecretkey';
 
 function signJWT(data) {
     return jwt.sign(data, SECRET_KEY);

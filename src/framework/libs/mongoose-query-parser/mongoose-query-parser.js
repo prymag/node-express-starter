@@ -1,4 +1,4 @@
-const LIMIT = 3;
+const LIMIT = process.env.PAGINATION_LIMIT || 10;
 
 /**
  * Builds search query

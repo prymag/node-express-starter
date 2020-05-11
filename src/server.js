@@ -3,9 +3,12 @@ import routes from './route-loader';
 import { MongooseDB } from './db/mongoose';
 import { ErrorHandler } from "@framework/middlewares/error-handler";
 import cookieparser from "cookie-parser";
+import { config } from "dotenv";
+
+config();
 
 const app = express();
-const port = 3000;
+const port = process.env.SERVER_PORT || 3000;
 
 app.use(express.json());
 app.use(cookieparser());
@@ -17,7 +20,7 @@ const dbOpts = {
     useCreateIndex: true,
     useFindAndModify: false
 };
-const db = new MongooseDB(dbConStr, dbOpts);
+const db = new MongooseDB(process.env.MONGO_CONNECTION_STR || dbConStr, dbOpts);
 
 db.start()
 .then((res) => {

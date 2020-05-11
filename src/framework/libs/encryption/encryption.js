@@ -2,8 +2,8 @@ import bcrypt from 'bcrypt';
 import { Error } from "mongoose";
 import UserModel from '../../models/user.model';
 
-const SALT_ROUNDS = 3;
-const MIN_LENGTH = 6;
+const SALT_ROUNDS = process.env.ENC_ROUNDS || 3;
+const MIN_LENGTH = process.env.ENC_MIN_LENGTH || 6;
 
 function validateStr(str, fieldName) {
     //
