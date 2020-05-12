@@ -49,27 +49,6 @@ function limit(queryParams) {
     return LIMIT;
 }
 
-function paginate(find, queryParams) {
-    const perPage = limit(queryParams);
-    
-    find.limit(perPage);
-    
-    // We set the default page.
-    queryParams = {...{page: 1}, ...queryParams};
-
-    return find.exec()
-        .then((res) => {
-            //
-            const pageData = {
-                items: res,
-                perPage: perPage,
-                
-            };
-            return Promise.resolve(pageData);
-        })
-        .catch(err => Promise.reject);
-}
-
 function mqpp(queryParams, opts) {
 
     return  {
