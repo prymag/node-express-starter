@@ -1,4 +1,4 @@
-function toJSON(error) {
+function parse(error) {
     //
     const errors = error.errors;
     const json = [];
@@ -17,4 +17,4 @@ function toJSON(error) {
     return json;
 }
 
-export default {toJSON: toJSON};
+export default parse;

@@ -1,5 +1,5 @@
 import { failed } from "@framework/libs/response/response";
-import { Errors } from "@framework/libs/error/error";
+import { ErrorParser } from "@framework/libs/error-parser/error";
 import { Error } from "mongoose";
 import * as StatusCodes from "http-status-codes";
 
@@ -11,7 +11,7 @@ function error(err, req, res, next) {
     if (err instanceof Error.ValidationError) {
         return failed(
             res, 
-            Errors.Mongoose.toJSON(err), 
+            ErrorParser.Mongoose(err), 
             'Validation Failed', 
             StatusCodes.UNPROCESSABLE_ENTITY
         );
