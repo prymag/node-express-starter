@@ -4,11 +4,10 @@ import { verifyJWT } from '@framework/libs/token';
 function jwtVerify(req, res, next) {
     //
     const token = req.cookies.token;
-
+    
     if (!token) {
-        next(new Error('Unauthorized'));
+        return next(new Error('Unauthorized'));
     }
-
     const data = verifyJWT(token);
     
     UserModel.findById(data._id)

@@ -7,7 +7,8 @@ function error(err, req, res, next) {
     if (res.headersSent) {
         return next(err);
     }
-    console.log(err);
+    //console.log(err);
+    
     if (err instanceof Error.ValidationError) {
         return failed(
             res, 
@@ -16,8 +17,7 @@ function error(err, req, res, next) {
             StatusCodes.UNPROCESSABLE_ENTITY
         );
     }    
-
-    failed(res, err, 'Error');
+    return failed(res, err, 'Error');
 }
 
 export {error as ErrorHandler};
