@@ -1,7 +1,7 @@
 import UserModel from "@framework/models/user.model";
-import buildError from "@framework/libs/error-builder/error-builder";
-import { encrypt } from '@framework/libs/encryption/encryption';
-import { mqpp } from "@framework/libs/mongoose-query-parser/mongoose-query-parser";
+import buildError from "@framework/libs/error-builder";
+import { encrypt } from '@framework/libs/encryption';
+import { mqpp } from "@framework/libs/mongoose-query-parser";
 
 const MIN_LENGTH = process.env.ENC_MIN_LENGTH || 6;
 

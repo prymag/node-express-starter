@@ -1,5 +1,5 @@
-import { failed } from "@framework/libs/response/response";
-import { ErrorParser } from "@framework/libs/error-parser/error";
+import { failed } from "@framework/libs/response";
+import { ErrorParser } from "@framework/libs/error-parser";
 import { Error } from "mongoose";
 import * as StatusCodes from "http-status-codes";
 

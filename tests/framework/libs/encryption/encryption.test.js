@@ -1,4 +1,4 @@
-import { encrypt, compare } from "@framework/libs/encryption/encryption";
+import { encrypt, compare } from "@framework/libs/encryption";
 
 describe('Lib/encryption/encryption', () => {
     //

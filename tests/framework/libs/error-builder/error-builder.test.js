@@ -3,7 +3,7 @@ jest.mock('@framework/libs/error-builder/mongoose', () => ({
    default: jest.fn(() => 'mongoose')
 }));
 
-import buildError from "@framework/libs/error-builder/error-builder";
+import buildError from "@framework/libs/error-builder";
 
 describe('Lib/error-builder', () => {
     //

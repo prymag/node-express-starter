@@ -1,4 +1,4 @@
-import * as response from "@framework/libs/response/response";
+import * as response from "@framework/libs/response";
 import Service from '../services/user.service';
 
 class UserController {

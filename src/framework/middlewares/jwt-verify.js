@@ -1,5 +1,5 @@
 import UserModel from "../models/user.model";
-import { verifyJWT } from '@framework/libs/token/token';
+import { verifyJWT } from '@framework/libs/token';
 
 function jwtVerify(req, res, next) {
     //

@@ -1,4 +1,4 @@
-import { mqpp } from "@framework/libs/mongoose-query-parser/mongoose-query-parser";
+import { mqpp } from "@framework/libs/mongoose-query-parser";
 
 describe('Lib/mongoose-query-parser', () => {
 

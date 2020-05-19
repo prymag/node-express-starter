@@ -1,5 +1,5 @@
 import { UserService } from "@modules/user/user";
-import { compare } from "@framework/libs/encryption/encryption";
+import { compare } from "@framework/libs/encryption";
 
 class AuthService extends UserService {
 

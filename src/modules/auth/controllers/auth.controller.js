@@ -1,6 +1,6 @@
-import * as response from "@framework/libs/response/response";
+import * as response from "@framework/libs/response";
 import AuthService from '../services/auth.service';
-import { signJWT } from '@framework/libs/token/token';
+import { signJWT } from '@framework/libs/token';
 
 class AuthController {
     //
