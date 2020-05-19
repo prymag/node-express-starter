@@ -2,17 +2,15 @@ function parse(error) {
     //
     const errors = error.errors;
     const json = [];
-    for (var property in errors) {
-        if (errors.hasOwnProperty(property)) {
-            const data = {
-                field: errors[property].path,
-                type: errors[property].kind,
-                message: errors[property].message.replace('Path ', '')
-            };
-
-            json.push(data);
-        }
-    }
+    Object.keys(errors).forEach((key, index) => {
+        //
+        const data = {
+            field: errors[key].path,
+            type: errors[key].kind,
+            message: errors[key].message.replace('Path ', '')
+        };
+        json.push(data);
+    });
 
     return json;
 }

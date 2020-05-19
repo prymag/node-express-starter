@@ -1,6 +1,9 @@
 import UserModel from "@framework/models/user.model";
+import buildError from "@framework/libs/error-builder/error-builder";
 import { encrypt } from '@framework/libs/encryption/encryption';
 import { mqpp } from "@framework/libs/mongoose-query-parser/mongoose-query-parser";
+
+const MIN_LENGTH = process.env.ENC_MIN_LENGTH || 6;
 
 class UserService {
 
@@ -10,20 +13,39 @@ class UserService {
         this._model = UserModel;
     }
 
-    hashPassword(body) {
+    encryptPassword(body) {
         //
         if (body && body.hasOwnProperty('password')) {
+            //
+            if (body.password.length < MIN_LENGTH) {
+                const param = {
+                    model: UserModel,
+                    errors: {
+                        password: {
+                            message: 'msg',
+                            path: 'password',
+                            type: 'length',
+                            value: '***'   
+                        }
+                    }
+                };
+                return Promise.reject(buildError('mongoose', param));
+            }
+
+
             return encrypt(body.password)
                 .then(pass => {
-                    body.password = pass;
-                    return Promise.resolve(body);
+                    // We spread it again so we do not return the same object
+                    const newBody = {...body};
+                    newBody.password = pass;
+                    return Promise.resolve(newBody);
                 });
         }
 
         return Promise.resolve(body);
     }
 
-    all(queryParams) {
+    all(queryParams = {}) {
         //
         const mqpOpts = {
             fields_to_search: ['username', 'firstname', 'lastname', 'email'],
@@ -41,7 +63,7 @@ class UserService {
 
     save(body) {
         //
-        return this.hashPassword(body)
+        return this.encryptPassword(body)
             .then(newBody =>{
                 let model = new this._model(newBody);
                 return model.save();
@@ -59,7 +81,7 @@ class UserService {
             new: true
         };
         
-        return this.hashPassword(body)
+        return this.encryptPassword(body)
             .then(newBody => this._model.findByIdAndUpdate(id, newBody, opts));
     }
 

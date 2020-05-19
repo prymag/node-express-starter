@@ -1,6 +1,5 @@
 import build from "@framework/libs/error-builder/mongoose";
 import UserModel from '@framework/models/user.model';
-
 import { Error } from 'mongoose';
 
 describe('Lib/error-builder/mongoose', () => {
@@ -45,7 +44,7 @@ describe('Lib/error-builder/mongoose', () => {
 
     it('Should throw an error', () => {
         //
-        expect(() => buildError({})).toThrowError();
+        expect(() => build({})).toThrowError();
     });
 
 });

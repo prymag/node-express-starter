@@ -22,4 +22,12 @@ describe('Libs/error-parser/mongoose', () => {
         expect(result).toEqual(expected);
     });
 
+    it('Should have empty errors', () => {
+        //
+        const error = new Error.ValidationError(new UserModel());
+        const result = parse(error);
+        
+        expect(result.errors).toBeUndefined();
+    });
+
 });
