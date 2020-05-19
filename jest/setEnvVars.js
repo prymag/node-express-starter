@@ -1,0 +1,1 @@
+process.env.MONGO_CONNECTION_STR=process.env.MONGO_URL;

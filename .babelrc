@@ -1,14 +1,23 @@
 {
-  "presets":["@babel/preset-env"],
-  "plugins": [
-    ["module-resolver", {
-      "root": ["./src"],
-      "alias": {
-        "@libs": "./src/libs",
-        "@framework": "./src/framework",
-        "@middlewares": "./src/middlewares",
-        "@modules": "./src/modules"
-      }
-    }]
-  ]
+    "presets":[
+        [
+            "@babel/preset-env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+        ]
+    ],
+    "plugins": [
+        ["module-resolver", {
+            "root": ["./src"],
+            "alias": {
+            "@db": "./src/db",
+            "@framework": "./src/framework",
+            "@middlewares": "./src/middlewares",
+            "@modules": "./src/modules"
+            }
+        }]
+    ]
 }

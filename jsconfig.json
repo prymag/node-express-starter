@@ -4,7 +4,7 @@
         "target": "es6",
         "baseUrl": ".",
         "paths": {
-            "@libs/*": ["src/libs/*"],
+            "@db/*": ["src/db/*"],
             "@middlewares/*": ["src/middlewares/*"],
             "@framework/*": ["src/framework/*"],
             "@modules/*": ["src/modules/*"]
