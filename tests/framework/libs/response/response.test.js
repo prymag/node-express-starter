@@ -13,7 +13,7 @@ describe('Lib/response', () =>{
 
         const res = {};
         res.status = jest.fn();
-        res.json = jest.fn().mockImplementation(() => expected);
+        res.json = jest.fn().mockImplementation((response) => response);
 
         const data = {
             property: 'property_value'
@@ -26,19 +26,26 @@ describe('Lib/response', () =>{
         expect(res.json).toHaveBeenCalled();
         expect(res.json).toHaveBeenCalledWith(expected);
 
-        expect(result).toBe(expected);
+        expect(result).toEqual(expected);
     });
 
     it('Should be able to set success status', () => {
         //
+        const expected = {
+            success: true,
+            message: 'Redirected',
+            data: {}
+        };
+
         const res = {};
         res.status = jest.fn();
-        res.json = jest.fn();
+        res.json = jest.fn().mockImplementation((response) => response);
 
         const result = success(res, {}, 'Redirected', 301);
 
         expect(res.status).toHaveBeenCalled();
         expect(res.status).toHaveBeenCalledWith(301);
+        expect(result).toEqual(expected);
     });
 
     it('Should be failed', () => {
@@ -51,7 +58,7 @@ describe('Lib/response', () =>{
 
         const res = {};
         res.status = jest.fn();
-        res.json = jest.fn().mockImplementation(() => expected);
+        res.json = jest.fn().mockImplementation((response) => response);
 
         const data = {
             property: 'some_error_property_value'
@@ -64,7 +71,7 @@ describe('Lib/response', () =>{
         expect(res.json).toHaveBeenCalled();
         expect(res.json).toHaveBeenCalledWith(expected);
 
-        expect(result).toBe(expected); 
+        expect(result).toEqual(expected); 
     });
 
     it('Should be able to set failed status', () => {
@@ -90,6 +97,31 @@ describe('Lib/response', () =>{
 
         failed(res, {}, 'Anything', 0);
         expect(res.status).toHaveBeenCalledWith(500);
+    });
+
+    it('Should set default messages', () => {
+        //
+        const expectedSuccess = {
+            success:true,
+            message: 'Success',
+            data: {},
+        };
+
+        const expectedFailed = {
+            success:false,
+            message: 'Failed',
+            data: {},
+        };
+
+        const res = {};
+        res.status = jest.fn();
+        res.json = jest.fn().mockImplementation((response) => response);
+
+        const result = success(res, {});
+        expect(result).toEqual(expectedSuccess);
+
+        const resultFailed = failed(res, {});
+        expect(resultFailed).toEqual(expectedFailed);
     });
 
 });

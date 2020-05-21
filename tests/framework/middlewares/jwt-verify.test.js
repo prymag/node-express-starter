@@ -1,36 +1,16 @@
-jest.mock('@framework/models/user.model', () => ({
-    __esModule: true,
-    default: {
-        findById: (_id) => {
-            //
-            if (_id == '1234') {
-                return Promise.resolve({
-                    _id: '1234',
-                    username: 'sampleuser',
-                    password: 'encryptedpassword',
-                    firstname: 'myfirstane',
-                    lastname: 'mylastname'
-                });
-            } 
-
-            return Promise.reject('Error');
-        }
-    }
-}));
-
-jest.mock('@framework/libs/token', () => ({
-    __esModule: true,
-    verifyJWT: jest.fn((token) => {
-        return token == 'samplevalidtoken' ? 
-            {_id: '1234'} :
-            {};
-    })
-}));
+jest.mock('@framework/models/user.model');
+jest.mock('@framework/libs/token');
 
 import { jwtVerify } from "@framework/middlewares/jwt-verify";
+import UserModel from "@framework/models/user.model";
+import * as token from "@framework/libs/token";
 
 describe('Middlewares/jwt-verify', () => {
     //
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
     it('Should verify user', (done) => {
         //
         expect.assertions(2);
@@ -47,6 +27,9 @@ describe('Middlewares/jwt-verify', () => {
             lastname: 'mylastname'
         };
 
+        jest.spyOn(UserModel, 'findById').mockReturnValue(Promise.resolve(expectedUser));
+        jest.spyOn(token, 'verifyJWT').mockReturnValue({_id: '1234'});
+    
         const next = (err) => {
             //
             expect(err).toBeFalsy();
@@ -57,10 +40,15 @@ describe('Middlewares/jwt-verify', () => {
         jwtVerify(req, res, next);
     });
 
-    it('Should call next on error', (done) => {
+   it('Should call next on error', (done) => {
         //
         const req = {cookies: {token :'invalidtoken'}};
         const res = {};
+
+        jest.spyOn(token, 'verifyJWT').mockImplementation(() => {
+            throw new Error();
+        });
+
         const next = (err) => {
             //
             expect(err).toBeTruthy();
@@ -70,11 +58,28 @@ describe('Middlewares/jwt-verify', () => {
         jwtVerify(req, res, next);
     });
 
+    it('Should call next if user not found', (done) => {
+        //
+        const mockError = new Error('Cannot find user');
+
+        const req = {cookies: {token :'validtoken'}};
+        const res = {};
+        const next = (err) => {
+            expect(err).toEqual(mockError);
+            done();
+        };
+
+        jest.spyOn(token, 'verifyJWT').mockImplementation(() => Promise.resolve({id: '1234'}));
+        jest.spyOn(UserModel, 'findById').mockReturnValue(Promise.reject(mockError));
+
+        jwtVerify(req, res, next);
+    });
+
     it('Should call next with unauthorized message', (done) => {
         //
         expect.assertions(2);
         const req = {cookies: {}};
-        const res = {};
+        const res = {}; 
 
         const next = (err) => {
             //

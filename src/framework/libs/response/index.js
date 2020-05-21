@@ -1,4 +1,4 @@
-function success(res, data, msg, statusCode = 200) {
+function success(res, data, msg = 'Success', statusCode = 200) {
     const response ={
         success: true,
         message: msg,
@@ -10,11 +10,11 @@ function success(res, data, msg, statusCode = 200) {
     }
 
     res.status(statusCode);
-
+    //console.log('... setting the response', res);
     return res.json(response);
 }
 
-function failed(res, data, msg, statusCode = 500) {
+function failed(res, data, msg = 'Failed', statusCode = 500) {
     const response = {
         success: false,
         message: msg,
