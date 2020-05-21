@@ -8,15 +8,20 @@ function jwtVerify(req, res, next) {
     if (!token) {
         return next(new Error('Unauthorized'));
     }
-    const data = verifyJWT(token);
+
+    try {
+        const data = verifyJWT(token);
+        UserModel.findById(data._id)
+            .then(user => {
+                req.user = user;
+                next();
+            }).catch(err => {
+                next(err);
+            });
+    } catch (e) {
+        return next(e);
+    }
     
-    UserModel.findById(data._id)
-        .then(user => {
-            req.user = user;
-            next();
-        }).catch(err => {
-            next(err);
-        });
 }
 
 export { jwtVerify };

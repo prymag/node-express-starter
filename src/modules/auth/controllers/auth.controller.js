@@ -21,7 +21,7 @@ class AuthController {
 
     login(req, res, next) {
         //
-        this._service
+        return this._service
             .authenticate(req.body.username, req.body.password)
             .then(user => {
                 // We are receiving a node document
@@ -32,7 +32,7 @@ class AuthController {
                 const token = signJWT(user);
                 res.cookie('token', token, {httpOnly: true});
 
-                return res.json({user, token});
+                return response.success(res, {user, token});
             })
             .catch(err => next(err));
     }

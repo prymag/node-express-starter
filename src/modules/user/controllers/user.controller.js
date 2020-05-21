@@ -15,7 +15,7 @@ class UserController {
 
     index(req, res, next) {
         //
-        this._service
+        return this._service
             .all(req.query)
             .then(success => response.success(res, success))
             .catch(fail => next(fail));
@@ -23,15 +23,15 @@ class UserController {
 
     store(req, res, next) {
         //
-        this._service
+        return this._service
             .save(req.body)
-            .then(success => res.send(success))
+            .then(data => response.success(res, data))
             .catch(fail => next(fail));   
     }
 
     show(req, res, next) {
         //
-        this._service
+        return this._service
             .get(req.params.id)
             .then(data => response.success(res, data, 'Success'))
             .catch(err => next(err));
@@ -39,7 +39,7 @@ class UserController {
 
     update(req, res, next) {
         //
-        this._service
+        return this._service
             .update(req.params.id, req.body)
             .then(data => response.success(res, data, 'Success'))
             .catch(err => next(err));
@@ -47,7 +47,7 @@ class UserController {
 
     delete(req, res, next) {
         //
-        this._service
+        return this._service
             .delete(req.id)
             .then(data => response.success(res, data, 'Success'))
             .catch(err => next(err)); 

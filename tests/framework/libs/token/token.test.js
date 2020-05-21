@@ -21,4 +21,9 @@ describe('Lib/Token', () => {
         expect(verified).toMatchObject(data);
     });
 
+    it('Should be an error', () => {
+        //
+        expect(() => verifyJWT('myotken')).toThrow();
+    });
+
 });
