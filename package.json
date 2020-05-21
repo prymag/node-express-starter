@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/server.js ",
+    "build": "rimraf ./dist && mkdir dist && babel src -s -d dist",
+    "serve": "npm run build && node dist/index.js",
+    "dev": "nodemon --exec babel-node src/index.js ",
     "test": "jest --watchAll --detectOpenHandles"
   },
   "repository": {
@@ -39,6 +41,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "rimraf": "^3.0.2",
     "validator": "^13.0.0"
   },
   "devDependencies": {
