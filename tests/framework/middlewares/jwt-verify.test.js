@@ -1,9 +1,12 @@
 jest.mock('@framework/models/user.model');
 jest.mock('@framework/libs/token');
+jest.mock('@framework/libs/error-builder');
 
 import { jwtVerify } from "@framework/middlewares/jwt-verify";
 import UserModel from "@framework/models/user.model";
 import * as token from "@framework/libs/token";
+import * as ErrorBuilder from "@framework/libs/error-builder";
+import HttpStatus from "http-status-codes";
 
 describe('Middlewares/jwt-verify', () => {
     //
@@ -40,22 +43,21 @@ describe('Middlewares/jwt-verify', () => {
         jwtVerify(req, res, next);
     });
 
-   it('Should call next on error', (done) => {
+   it('Should call next on error', () => {
         //
+        expect.assertions(1);
+        
         const req = {cookies: {token :'invalidtoken'}};
         const res = {};
 
+        const mockError = new Error('Mock Invalid jwt');
         jest.spyOn(token, 'verifyJWT').mockImplementation(() => {
-            throw new Error();
+            throw mockError;
         });
-
-        const next = (err) => {
-            //
-            expect(err).toBeTruthy();
-            done();
-        };
+        const next = jest.fn();
 
         jwtVerify(req, res, next);
+        expect(next).toHaveBeenCalledWith(mockError);
     });
 
     it('Should call next if user not found', (done) => {
@@ -64,6 +66,10 @@ describe('Middlewares/jwt-verify', () => {
 
         const req = {cookies: {token :'validtoken'}};
         const res = {};
+
+        // next function is inside the catch block
+        // mocking next does not seem be to called
+        // so we do it this way instead
         const next = (err) => {
             expect(err).toEqual(mockError);
             done();
@@ -75,20 +81,28 @@ describe('Middlewares/jwt-verify', () => {
         jwtVerify(req, res, next);
     });
 
-    it('Should call next with unauthorized message', (done) => {
+    it('Should handle unauthorized', () => {
         //
-        expect.assertions(2);
+        expect.assertions(4);
         const req = {cookies: {}};
         const res = {}; 
 
-        const next = (err) => {
-            //
-            expect(err).toBeInstanceOf(Error);
-            expect(err.message).toBe('Unauthorized');
-            done();
-        };
+        const next = jest.fn();
+        
+        const mockSetTitle = jest.fn().mockReturnThis();
+        const mockSetStatusCode = jest.fn().mockReturnThis();
 
+        ErrorBuilder.default.mockReturnValue({
+            setTitle: mockSetTitle,
+            setStatusCode: mockSetStatusCode
+        });
+        
         jwtVerify(req, res, next);
+
+        expect(next).toHaveBeenCalled();
+        expect(ErrorBuilder.default).toHaveBeenCalledWith('app');
+        expect(mockSetTitle).toHaveBeenCalledWith('Unauthorized');
+        expect(mockSetStatusCode).toHaveBeenCalledWith(HttpStatus.UNAUTHORIZED);
     });
 
 });
