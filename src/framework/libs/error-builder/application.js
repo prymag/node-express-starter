@@ -2,15 +2,10 @@ class AppError {
 
     constructor() {
         //
-        this.title = '';
+        this.data = {};
         this.statusCode = '';
         this.msg = '';
         
-        return this;
-    }
-
-    setTitle(title = 'Application Error') {
-        this.title = title;
         return this;
     }
 
@@ -19,8 +14,13 @@ class AppError {
         return this;
     }
 
-    setMsg(msg = '') {
+    setMsg(msg = 'Application Error') {
         this.msg = msg;
+        return this;
+    }
+
+    setData(data = {}) {
+        this.data = {...data};
         return this;
     }
 
