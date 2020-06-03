@@ -1,5 +1,7 @@
 import { UserService } from "@modules/user/user";
 import { compare } from "@framework/libs/encryption";
+import buildError from "@framework/libs/error-builder";
+import { NOT_FOUND } from "http-status-codes";
 
 class AuthService extends UserService {
 
@@ -7,6 +9,14 @@ class AuthService extends UserService {
         super();
 
         this.authenticate = this.authenticate.bind(this);
+    }
+
+    getUserNotFoundError() {
+        //
+        return buildError('app')
+            .setMsg('User not found')
+            .setStatusCode(NOT_FOUND)
+            .setData({eType: 'notFound', eDetail: 'userNotFound'});
     }
 
     async authenticate(username, password) {
@@ -17,8 +27,8 @@ class AuthService extends UserService {
 
         const user = await this._model.findOne({username});
         
-        if (!user) {
-            return Promise.reject('User not found');
+        if (!user){
+            return Promise.reject(this.getUserNotFoundError());
         }
         
         return compare(user.password, password)
@@ -26,7 +36,7 @@ class AuthService extends UserService {
                 //            
                 return result ? 
                     Promise.resolve(user) : 
-                    Promise.reject('User not found');
+                    Promise.reject(this.getUserNotFoundError());
             });
     }
 
