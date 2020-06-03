@@ -19,9 +19,9 @@ function error(err, req, res, next) {
     }
 
     if (err instanceof AppError) {
-        errorData = `Error: ${err.title}`;
+        errorData = err.data;
         statusCode = err.statusCode;
-        msg = `${err.title}: ${err.msg}`;
+        msg = err.msg;
     }
 
     return failed(res, errorData, msg, statusCode);
