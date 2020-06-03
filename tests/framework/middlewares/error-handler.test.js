@@ -104,7 +104,15 @@ describe('Middlewares/error-handler', () => {
 
     it('Should process application error', () => {
         //
-        const err = buildError('app').setTitle('Unauthorized').setStatusCode(401);
+        const data = {
+            eType: 'notFound',
+            eDtail: 'userNotFound'
+        };
+        const err = buildError('app')
+            .setData(data)
+            .setMsg('User not found')
+            .setStatusCode(404);
+
         const req = {};
         const res = {};
         const next = jest.fn();
@@ -115,7 +123,7 @@ describe('Middlewares/error-handler', () => {
         ErrorHandler(err, req, res, next);
 
         expect(next).not.toHaveBeenCalled();
-        expect(response.failed).toHaveBeenCalledWith(res, 'Error: Unauthorized', 'Unauthorized: ', 401);
+        expect(response.failed).toHaveBeenCalledWith(res, data, 'User not found', 404);
 
     });
 
