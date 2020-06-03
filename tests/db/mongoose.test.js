@@ -42,6 +42,6 @@ describe('Mongoose connection', () => {
             useFindAndModify: false
         });
     
-        expect(mongoose.start()).rejects.toBeInstanceOf(Error);
+        await expect(mongoose.start()).rejects.toBeInstanceOf(Error);
     });
 });
