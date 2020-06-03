@@ -15,28 +15,9 @@ describe('Lib/error-builder', () => {
 
     it('APPERROR', () => {
         //
-        // https://blog.bguiz.com/2017/mocking-chained-apis-jest/
-        const mockSetTitle = jest.fn().mockReturnThis();
-        const mockSetMsg = jest.fn().mockReturnThis();
-        const mockSetStatus = jest.fn().mockReturnThis();
-
-        const mockProps = {
-            setTitle: mockSetTitle,
-            setMsg: mockSetMsg,
-            setStatusCode: mockSetStatus
-        };
-
-        AppError.prototype = mockProps;
-
-        buildError('app').setTitle('Unexpected Entity')
-            .setMsg('Unexpected entity encountered')
-            .setStatusCode(500);
-
+        const error = buildError('app');
         expect(AppError).toHaveBeenCalled();
-        
-        expect(mockSetTitle).toHaveBeenCalledWith('Unexpected Entity');
-        expect(mockSetMsg).toHaveBeenCalledWith('Unexpected entity encountered');
-        expect(mockSetStatus).toHaveBeenCalledWith(500);
+        expect(error).toBeInstanceOf(AppError);
     });
 
     it('Should throw error on unknown params', () => {
