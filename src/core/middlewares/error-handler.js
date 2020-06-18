@@ -1,7 +1,7 @@
-import { failed } from "@framework/libs/response";
-import { ErrorParser } from "@framework/libs/error-parser";
+import { failed } from "@core/libs/response";
+import { ErrorParser } from "@core/libs/error-parser";
+import { AppError } from "@core/libs/error-builder";
 import { Error } from "mongoose";
-import { AppError } from "@framework/libs/error-builder";
 
 function error(err, req, res, next) {
     if (res.headersSent) {

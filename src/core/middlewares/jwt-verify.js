@@ -1,6 +1,6 @@
-import UserModel from "../models/user.model";
-import { verifyJWT } from '@framework/libs/token';
-import buildError from "@framework/libs/error-builder";
+import UserModel from "@core/models/user.model";
+import { verifyJWT } from '@core/libs/token';
+import buildError from "@core/libs/error-builder";
 import HttpStatus from "http-status-codes";
 function jwtVerify(req, res, next) {
     //

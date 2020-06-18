@@ -1,5 +1,5 @@
-import build from "@framework/libs/error-builder/mongoose";
-import UserModel from '@framework/models/user.model';
+import build from "@core/libs/error-builder/mongoose";
+import UserModel from '@core/models/user.model';
 import { Error } from 'mongoose';
 
 describe('Lib/error-builder/mongoose', () => {

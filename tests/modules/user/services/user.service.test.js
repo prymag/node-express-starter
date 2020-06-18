@@ -1,6 +1,6 @@
 import UserService from "@modules/user/services/user.service";
 import { Error } from "mongoose";
-import UserModel from "@framework/models/user.model";
+import UserModel from "@core/models/user.model";
 import { MongooseDB } from "@db/mongoose";
 import Faker from "faker";
 

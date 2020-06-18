@@ -1,6 +1,6 @@
-import UserModel from "@framework/models/user.model";
+import UserModel from "@core/models/user.model";
 import { Error } from "mongoose";
-import parse from "@framework/libs/error-parser/mongoose";
+import parse from "@core/libs/error-parser/mongoose";
 
 describe('Libs/error-parser/mongoose', () => {
 

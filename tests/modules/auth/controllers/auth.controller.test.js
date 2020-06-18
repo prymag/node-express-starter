@@ -1,9 +1,9 @@
 jest.mock("@modules/auth/services/auth.service");
-jest.mock("@framework/libs/token");
+jest.mock("@core/libs/token");
 
 import Service from "@modules/auth/services/auth.service";
 import AuthController from "@modules/auth/controllers/auth.controller";
-import * as token from '@framework/libs/token';
+import * as token from '@core/libs/token';
 
 describe('Modules/auth/controllers/auth.controller', () => {
     //

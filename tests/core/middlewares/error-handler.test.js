@@ -1,5 +1,5 @@
 import { Error } from "mongoose";
-import UserModel from "@framework/models/user.model";
+import UserModel from "@core/models/user.model";
 
 /**
  * Mock the ErrorParser dependency
@@ -7,7 +7,7 @@ import UserModel from "@framework/models/user.model";
  * Just return the parser name
  * instead of the whole function
  */
-jest.mock('@framework/libs/error-parser');
+jest.mock('@core/libs/error-parser');
 
 /**
  * Mock the failed response dependency
@@ -16,12 +16,12 @@ jest.mock('@framework/libs/error-parser');
  * Use this to return a dummy data
  * that will be used in the expections
  */
-jest.mock('@framework/libs/response');
+jest.mock('@core/libs/response');
 
-import { ErrorHandler } from "@framework/middlewares/error-handler";
-import { ErrorParser } from "@framework/libs/error-parser";
-import * as response from "@framework/libs/response";
-import buildError from "@framework/libs/error-builder";
+import { ErrorHandler } from "@core/middlewares/error-handler";
+import { ErrorParser } from "@core/libs/error-parser";
+import * as response from "@core/libs/response";
+import buildError from "@core/libs/error-builder";
 
 
 describe('Middlewares/error-handler', () => {

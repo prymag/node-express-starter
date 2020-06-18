@@ -1,10 +1,10 @@
-jest.mock('@framework/models/user.model');
-jest.mock('@framework/libs/encryption');
+jest.mock('@core/models/user.model');
+jest.mock('@core/libs/encryption');
 
 import AuthService from "@modules/auth/services/auth.service";
-import UserModel from "@framework/models/user.model";
-import * as encryption from "@framework/libs/encryption";
-import * as errorBuilder from "@framework/libs/error-builder";
+import UserModel from "@core/models/user.model";
+import * as encryption from "@core/libs/encryption";
+import * as errorBuilder from "@core/libs/error-builder";
 
 describe('Modules/Auth/Services/AuthService', () => {
     //

@@ -1,9 +1,9 @@
-jest.mock('@framework/libs/error-builder/mongoose');
-jest.mock("@framework/libs/error-builder/application");
+jest.mock('@core/libs/error-builder/mongoose');
+jest.mock("@core/libs/error-builder/application");
 
-import buildError from "@framework/libs/error-builder";
-import { AppError } from "@framework/libs/error-builder/application";
-import * as mongoose from "@framework/libs/error-builder/mongoose";
+import buildError from "@core/libs/error-builder";
+import { AppError } from "@core/libs/error-builder/application";
+import * as mongoose from "@core/libs/error-builder/mongoose";
 
 describe('Lib/error-builder', () => {
     //

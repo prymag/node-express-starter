@@ -1,11 +1,11 @@
-jest.mock('@framework/models/user.model');
-jest.mock('@framework/libs/token');
-jest.mock('@framework/libs/error-builder');
+jest.mock('@core/models/user.model');
+jest.mock('@core/libs/token');
+jest.mock('@core/libs/error-builder');
 
-import { jwtVerify } from "@framework/middlewares/jwt-verify";
-import UserModel from "@framework/models/user.model";
-import * as token from "@framework/libs/token";
-import * as ErrorBuilder from "@framework/libs/error-builder";
+import { jwtVerify } from "@core/middlewares/jwt-verify";
+import UserModel from "@core/models/user.model";
+import * as token from "@core/libs/token";
+import * as ErrorBuilder from "@core/libs/error-builder";
 import HttpStatus from "http-status-codes";
 
 describe('Middlewares/jwt-verify', () => {

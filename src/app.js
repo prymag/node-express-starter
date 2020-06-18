@@ -1,7 +1,7 @@
 import express from "express";
 import routes from './route-loader';
 import { MongooseDB } from './db/mongoose';
-import { ErrorHandler } from "@framework/middlewares/error-handler";
+import { ErrorHandler } from "@core/middlewares/error-handler";
 import cookieparser from "cookie-parser";
 import { config } from "dotenv";
 

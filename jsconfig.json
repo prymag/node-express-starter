@@ -6,7 +6,7 @@
         "paths": {
             "@db/*": ["src/db/*"],
             "@middlewares/*": ["src/middlewares/*"],
-            "@framework/*": ["src/framework/*"],
+            "@core/*": ["src/core/*"],
             "@modules/*": ["src/modules/*"]
         }
     },

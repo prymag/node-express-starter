@@ -1,6 +1,6 @@
 import { UserService } from "@modules/user/user";
-import { compare } from "@framework/libs/encryption";
-import buildError from "@framework/libs/error-builder";
+import { compare } from "@core/libs/encryption";
+import buildError from "@core/libs/error-builder";
 import { NOT_FOUND } from "http-status-codes";
 
 class AuthService extends UserService {

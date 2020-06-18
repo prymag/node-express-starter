@@ -1,4 +1,4 @@
-import { signJWT, verifyJWT } from "@framework/libs/token";
+import { signJWT, verifyJWT } from "@core/libs/token";
 
 describe('Lib/Token', () => {
 

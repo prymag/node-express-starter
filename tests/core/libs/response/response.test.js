@@ -1,4 +1,4 @@
-import { failed, success } from "@framework/libs/response";
+import { failed, success } from "@core/libs/response";
 
 
 describe('Lib/response', () =>{

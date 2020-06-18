@@ -1,7 +1,7 @@
-import { AppError } from "@framework/libs/error-builder/application";
+import { AppError } from "@core/libs/error-builder/application";
 import HttpStatus from "http-status-codes";
 
-describe("@framework/libs/error-builder/application", () => {
+describe("@core/libs/error-builder/application", () => {
     //
     it('Should build app error chained', () => {
         //
