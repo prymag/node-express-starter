@@ -4,7 +4,7 @@ import UserModel from "@core/models/user.model";
 import { MongooseDB } from "@db/mongoose";
 import Faker from "faker";
 
-describe('Modules/User/Services/UserService', () => {
+describe('@modules/user/services/user.service', () => {
     //
     const service = new UserService();
 

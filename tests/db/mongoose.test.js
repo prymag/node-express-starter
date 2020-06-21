@@ -1,7 +1,7 @@
 import { MongooseDB } from "@db/mongoose";
 import { Mongoose } from "mongoose";
 
-describe('Mongoose connection', () => {
+describe('@db/mongoose', () => {
     // 
     let mongoose, connection, db;
 

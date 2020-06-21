@@ -1,6 +1,6 @@
 import { signJWT, verifyJWT } from "@core/libs/token";
 
-describe('Lib/Token', () => {
+describe('@core/libs/Token', () => {
 
     const data = {
         _id: 'abcd',

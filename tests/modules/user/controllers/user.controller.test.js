@@ -3,7 +3,7 @@ jest.mock("@modules/user/services/user.service");
 import UserController from "@modules/user/controllers/user.controller";
 import UserService from "@modules/user/services/user.service";
 
-describe("Modules/User/Controller/User", () => {
+describe("@modules/user/controllers/user.controller", () => {
     //
     let controller, mockJson, mockSetStatus;
 

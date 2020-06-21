@@ -1,7 +1,6 @@
 import { failed, success } from "@core/libs/response";
 
-
-describe('Lib/response', () =>{
+describe('@core/libs/response', () =>{
     //
     it('Should be success', () => {
         //

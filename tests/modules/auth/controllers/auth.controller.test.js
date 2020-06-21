@@ -5,7 +5,7 @@ import Service from "@modules/auth/services/auth.service";
 import AuthController from "@modules/auth/controllers/auth.controller";
 import * as token from '@core/libs/token';
 
-describe('Modules/auth/controllers/auth.controller', () => {
+describe('@modules/auth/controllers/auth.controller', () => {
     //
     let controller, mockJson, mockSetStatus, next;
 

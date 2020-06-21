@@ -15,7 +15,7 @@ import * as response from "@core/libs/response";
 import { AppError } from "@core/libs/error-builder/application";
 
 
-describe('Middlewares/error-handler', () => {
+describe('@core/middlewares/error-handler', () => {
 
     afterEach(() => {
         jest.restoreAllMocks();

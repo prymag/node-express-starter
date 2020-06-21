@@ -8,7 +8,7 @@ import * as token from "@core/libs/token";
 import { AppError } from "@core/libs/error-builder/application";
 import HttpStatus from "http-status-codes";
 
-describe('Middlewares/jwt-verify', () => {
+describe('@core/middlewares/jwt-verify', () => {
     //
     afterEach(() => {
         jest.restoreAllMocks();

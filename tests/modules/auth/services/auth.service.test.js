@@ -8,7 +8,7 @@ import * as encryption from "@core/libs/encryption";
 import { AppError } from "@core/libs/error-builder/application";
 import { NOT_FOUND } from "http-status-codes";
 
-describe('Modules/Auth/Services/AuthService', () => {
+describe('@modules/auth/services/auth.service', () => {
     //
     const service = new AuthService();
 

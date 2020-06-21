@@ -1,6 +1,6 @@
 import { mqpp } from "@core/libs/mongoose-query-parser";
 
-describe('Lib/mongoose-query-parser', () => {
+describe('@core/libs/mongoose-query-parser', () => {
 
     let qP, opts, expected;
     

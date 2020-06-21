@@ -1,6 +1,6 @@
 import { encrypt, compare } from "@core/libs/encryption";
 
-describe('Lib/encryption/encryption', () => {
+describe('@core/libs/encryption', () => {
     //
     it('ENCRYPT', () => {
         //
