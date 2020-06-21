@@ -2,14 +2,6 @@ import { Error } from "mongoose";
 import UserModel from "@core/models/user.model";
 
 /**
- * Mock the ErrorParser dependency
- * 
- * Just return the parser name
- * instead of the whole function
- */
-jest.mock('@core/libs/error-parser');
-
-/**
  * Mock the failed response dependency
  * of the error handler
  * 
@@ -19,9 +11,8 @@ jest.mock('@core/libs/error-parser');
 jest.mock('@core/libs/response');
 
 import { ErrorHandler } from "@core/middlewares/error-handler";
-import { ErrorParser } from "@core/libs/error-parser";
 import * as response from "@core/libs/response";
-import buildError from "@core/libs/error-builder";
+import { AppError } from "@core/libs/error-builder/application";
 
 
 describe('Middlewares/error-handler', () => {
@@ -66,18 +57,27 @@ describe('Middlewares/error-handler', () => {
 
     it('Should process Mongoose error', () => {
         //
-        expect.assertions(4);
+        expect.assertions(3);
 
         const err = new Error.ValidationError(new UserModel());
         const req = {};
         const res = {};
         const next = jest.fn();
 
-        const mockValidationData = [
-            {
+        err.errors = {
+            password: new Error.ValidatorError({
                 field: 'Password',
                 type: 'length',
-                message: ''
+                path: 'password',
+                value: '***'
+            })
+        };
+
+        const mockValidationData = [
+            {
+                "field": "password", 
+                "message": "Validator failed for path `password` with value `***`", 
+                "type": "length"
             }
         ];
         const mockReturn = {
@@ -89,17 +89,13 @@ describe('Middlewares/error-handler', () => {
         const mockResponseFailed = jest.fn().mockReturnValue(mockReturn);
         response.failed = mockResponseFailed;
 
-        const mockMongooseParser = jest.fn().mockReturnValue('MockParseResult');
-        ErrorParser.Mongoose = mockMongooseParser;
-
         const expected =  {"data": mockValidationData, "message": "Error: Validation Failed", "success": false};
 
         const result = ErrorHandler(err, req, res, next);
-    
-        expect(result).toEqual(expected);
-        expect(mockMongooseParser).toHaveBeenCalledWith(err);
+
+        expect(mockResponseFailed).toHaveBeenCalledWith(res, mockValidationData, 'Error: Validation Failed', 422);
         expect(next).not.toHaveBeenCalled();
-        expect(mockResponseFailed).toHaveBeenCalledWith(res, 'MockParseResult', 'Error: Validation Failed', 422);
+        expect(result).toEqual(expected);
     });
 
     it('Should process application error', () => {
@@ -108,7 +104,7 @@ describe('Middlewares/error-handler', () => {
             eType: 'notFound',
             eDtail: 'userNotFound'
         };
-        const err = buildError('app')
+        const err = new AppError()
             .setData(data)
             .setMsg('User not found')
             .setStatusCode(404);

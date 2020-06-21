@@ -1,7 +1,6 @@
 import { failed } from "@core/libs/response";
-import { ErrorParser } from "@core/libs/error-parser";
-import { AppError } from "@core/libs/error-builder";
-import { Error } from "mongoose";
+import { AppError } from "@core/libs/error-builder/application";
+import { Error as MongooseError } from "mongoose";
 
 function error(err, req, res, next) {
     if (res.headersSent) {
@@ -12,10 +11,10 @@ function error(err, req, res, next) {
         msg = 'Error', 
         statusCode = 500;
 
-    if (err instanceof Error.ValidationError) {
-        errorData = ErrorParser.Mongoose(err);
-        msg = 'Error: Validation Failed';
+    if (err instanceof MongooseError.ValidationError) {
+        errorData = mongooseValidationErrorToErrorData(err);
         statusCode = 422;
+        msg = 'Error: Validation Failed';
     }
 
     if (err instanceof AppError) {
@@ -27,4 +26,21 @@ function error(err, req, res, next) {
     return failed(res, errorData, msg, statusCode);
 }
 
+function mongooseValidationErrorToErrorData(error) {
+    //
+    const errorData = [];
+    Object.keys(error.errors)
+        .forEach((key, index) => {
+            //
+            const data = {
+                field: error.errors[key].path,
+                type: error.errors[key].kind,
+                message: error.errors[key].message.replace('Path ', '')
+            };
+            errorData.push(data);
+        });
+    return errorData;
+}
+
 export {error as ErrorHandler};
+export { mongooseValidationErrorToErrorData };

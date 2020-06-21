@@ -1,7 +1,7 @@
 import UserModel from "@core/models/user.model";
-import buildError from "@core/libs/error-builder";
 import { encrypt } from '@core/libs/encryption';
 import { mqpp } from "@core/libs/mongoose-query-parser";
+import { MongooseValidationError } from "@core/libs/error-builder/mongoose-validation";
 
 const MIN_LENGTH = process.env.ENC_MIN_LENGTH || 6;
 
@@ -18,18 +18,19 @@ class UserService {
         if (body && body.hasOwnProperty('password')) {
             //
             if (body.password.length < MIN_LENGTH) {
-                const param = {
-                    model: UserModel,
-                    errors: {
-                        password: {
-                            message: 'msg',
-                            path: 'password',
-                            type: 'length',
-                            value: '***'   
-                        }
+                const errors = {
+                    password: {
+                        path: 'password',
+                        type: 'length',
+                        value: '***'   
                     }
                 };
-                return Promise.reject(buildError('mongoose', param));
+
+                const error = new MongooseValidationError(UserModel)
+                    .setErrors(errors)
+                    .getError();
+
+                return Promise.reject(error);
             }
 
 

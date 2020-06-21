@@ -1,11 +1,11 @@
 jest.mock('@core/models/user.model');
 jest.mock('@core/libs/token');
-jest.mock('@core/libs/error-builder');
+jest.mock('@core/libs/error-builder/application');
 
 import { jwtVerify } from "@core/middlewares/jwt-verify";
 import UserModel from "@core/models/user.model";
 import * as token from "@core/libs/token";
-import * as ErrorBuilder from "@core/libs/error-builder";
+import { AppError } from "@core/libs/error-builder/application";
 import HttpStatus from "http-status-codes";
 
 describe('Middlewares/jwt-verify', () => {
@@ -92,7 +92,7 @@ describe('Middlewares/jwt-verify', () => {
         const mockSetTitle = jest.fn().mockReturnThis();
         const mockSetStatusCode = jest.fn().mockReturnThis();
 
-        ErrorBuilder.default.mockReturnValue({
+        AppError.mockReturnValue({
             setTitle: mockSetTitle,
             setStatusCode: mockSetStatusCode
         });
@@ -100,7 +100,7 @@ describe('Middlewares/jwt-verify', () => {
         jwtVerify(req, res, next);
 
         expect(next).toHaveBeenCalled();
-        expect(ErrorBuilder.default).toHaveBeenCalledWith('app');
+        expect(AppError).toHaveBeenCalled();
         expect(mockSetTitle).toHaveBeenCalledWith('Unauthorized');
         expect(mockSetStatusCode).toHaveBeenCalledWith(HttpStatus.UNAUTHORIZED);
     });

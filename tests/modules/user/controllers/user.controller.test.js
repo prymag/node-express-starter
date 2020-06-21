@@ -1,7 +1,7 @@
 jest.mock("@modules/user/services/user.service");
 
 import UserController from "@modules/user/controllers/user.controller";
-import Service from "@modules/user/services/user.service";
+import UserService from "@modules/user/services/user.service";
 
 describe("Modules/User/Controller/User", () => {
     //
@@ -15,7 +15,7 @@ describe("Modules/User/Controller/User", () => {
 
     afterEach(() => {
         // Clear all instances and calls to constructor and all methods:
-        Service.mockClear();
+        UserService.mockClear();
         jest.restoreAllMocks();
     });
 
@@ -49,7 +49,7 @@ describe("Modules/User/Controller/User", () => {
         // Mock the implementation for the `all` function
         // of the UserService class
         const mockAll = jest.fn(() => Promise.resolve(mockSearchedDocuments));
-        jest.spyOn(Service.prototype, "all").mockImplementation((qp) => {
+        jest.spyOn(UserService.prototype, "all").mockImplementation((qp) => {
             return mockAll();
         });
 
@@ -87,7 +87,7 @@ describe("Modules/User/Controller/User", () => {
             lastname: 'lastname'
         };
         
-        jest.spyOn(Service.prototype, "save").mockImplementation((body) => {
+        jest.spyOn(UserService.prototype, "save").mockImplementation((body) => {
             //
             const user = {...body};
             user.password = 'encrypted';
@@ -135,7 +135,7 @@ describe("Modules/User/Controller/User", () => {
         };
         const next = jest.fn();
 
-        jest.spyOn(Service.prototype, "get").mockImplementation((id) => Promise.resolve(mockUser));
+        jest.spyOn(UserService.prototype, "get").mockImplementation((id) => Promise.resolve(mockUser));
 
         const result = await controller.show(req, res, next);
         
@@ -171,7 +171,7 @@ describe("Modules/User/Controller/User", () => {
         };
         const next = jest.fn();
 
-        jest.spyOn(Service.prototype, "update").mockImplementation((id, body) => Promise.resolve(mockUpdatedUser));
+        jest.spyOn(UserService.prototype, "update").mockImplementation((id, body) => Promise.resolve(mockUpdatedUser));
 
         const result = await controller.update(req, res, next);
 
@@ -202,7 +202,7 @@ describe("Modules/User/Controller/User", () => {
         };
         const next = jest.fn();
 
-        jest.spyOn(Service.prototype, "delete").mockImplementation((id, body) => Promise.resolve(mockDeleteResult));
+        jest.spyOn(UserService.prototype, "delete").mockImplementation((id, body) => Promise.resolve(mockDeleteResult));
 
         const result = await controller.delete(req, res, next);
 
@@ -225,7 +225,7 @@ describe("Modules/User/Controller/User", () => {
 
         // Index
         mockError = new Error('Testing error');
-        jest.spyOn(Service.prototype, "all").mockImplementation((qp) => {
+        jest.spyOn(UserService.prototype, "all").mockImplementation((qp) => {
             return Promise.reject(mockError);
         });
         
@@ -234,7 +234,7 @@ describe("Modules/User/Controller/User", () => {
 
         // Store
         mockError = new Error('Error saving user');
-        jest.spyOn(Service.prototype, "save").mockImplementation(() => Promise.reject(mockError));
+        jest.spyOn(UserService.prototype, "save").mockImplementation(() => Promise.reject(mockError));
 
         await controller.store(req, res, next);
         expect(next).toHaveBeenCalledWith(mockError);
@@ -242,7 +242,7 @@ describe("Modules/User/Controller/User", () => {
         // Show
         req = {params: {id: 'mongooseobjectid'}};
         mockError = new Error('Error getting user');
-        jest.spyOn(Service.prototype, "get").mockImplementation((id) => Promise.reject(mockError));
+        jest.spyOn(UserService.prototype, "get").mockImplementation((id) => Promise.reject(mockError));
     
         await controller.show(req, res, next);
         expect(next).toHaveBeenCalledWith(mockError);
@@ -254,7 +254,7 @@ describe("Modules/User/Controller/User", () => {
             body: {username: 'updatedusername',password: 'updatedpassword'}
         };
         mockError = new Error('Error updating user');
-        jest.spyOn(Service.prototype, "update").mockImplementation((id, body) => Promise.reject(mockError));
+        jest.spyOn(UserService.prototype, "update").mockImplementation((id, body) => Promise.reject(mockError));
 
         await controller.update(req, res, next);
         expect(next).toHaveBeenCalledWith(mockError);
@@ -263,7 +263,7 @@ describe("Modules/User/Controller/User", () => {
         // Delete
         req = {params: {id: 'mongooseobjectid'}};
         mockError = new Error('Error deleting user');
-        jest.spyOn(Service.prototype, "delete").mockImplementation((id) => Promise.reject(mockError));
+        jest.spyOn(UserService.prototype, "delete").mockImplementation((id) => Promise.reject(mockError));
 
         await controller.delete(req, res, next);
         expect(next).toHaveBeenCalledWith(mockError);

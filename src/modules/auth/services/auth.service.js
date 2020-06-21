@@ -1,7 +1,7 @@
-import { UserService } from "@modules/user/user";
+import { UserService } from "@modules/user";
 import { compare } from "@core/libs/encryption";
-import buildError from "@core/libs/error-builder";
 import { NOT_FOUND } from "http-status-codes";
+import { AppError } from "@core/libs/error-builder/application";
 
 class AuthService extends UserService {
 
@@ -13,7 +13,7 @@ class AuthService extends UserService {
 
     getUserNotFoundError() {
         //
-        return buildError('app')
+        return new AppError()
             .setMsg('User not found')
             .setStatusCode(NOT_FOUND)
             .setData({eType: 'notFound', eDetail: 'userNotFound'});

@@ -1,17 +1,44 @@
 jest.mock('@core/models/user.model');
 jest.mock('@core/libs/encryption');
+jest.mock('@core/libs/error-builder/application');
 
 import AuthService from "@modules/auth/services/auth.service";
 import UserModel from "@core/models/user.model";
 import * as encryption from "@core/libs/encryption";
-import * as errorBuilder from "@core/libs/error-builder";
+import { AppError } from "@core/libs/error-builder/application";
+import { NOT_FOUND } from "http-status-codes";
 
 describe('Modules/Auth/Services/AuthService', () => {
     //
     const service = new AuthService();
 
+    // https://blog.bguiz.com/2017/mocking-chained-apis-jest/
+    const mockMethods =  {
+        constructor: jest.fn().mockReturnThis(),
+        setMsg: jest.fn().mockReturnThis(),
+        setData: jest.fn().mockReturnThis(),
+        setStatusCode: jest.fn().mockReturnThis()
+    };
+
+    beforeEach(() => {
+        AppError.mockImplementation(() => mockMethods);
+    });
+
     afterEach(() => {
         jest.restoreAllMocks();
+    });
+
+    it('should get user not found error', () => {
+        //
+        const expectedData = {eType: 'notFound', eDetail: 'userNotFound'};
+
+        const result = service.getUserNotFoundError();
+        
+        expect(AppError).toHaveBeenCalled();
+        expect(mockMethods.setMsg).toHaveBeenCalledWith('User not found');
+        expect(mockMethods.setData).toHaveBeenCalledWith(expectedData);
+        expect(mockMethods.setStatusCode).toHaveBeenCalledWith(NOT_FOUND);
+        expect(result).toEqual(mockMethods);
     });
 
     it('Should throw an error', async() => {
@@ -31,6 +58,10 @@ describe('Modules/Auth/Services/AuthService', () => {
         await expect(service.authenticate('', '')).rejects.toBe('Please provide a username/password');
         
         jest.spyOn(UserModel, 'findOne').mockReturnValue(Promise.resolve());
+        // Mock getUserNotFoundErro
+        // the function has already been tested above
+        jest.spyOn(service, 'getUserNotFoundError').mockReturnValue(expectedUserNotFound);
+
         await expect(service.authenticate('invalidusername', 'invalidpassword')).rejects.toEqual(expectedUserNotFound);
         
         const mockValidUser = {
@@ -88,26 +119,5 @@ describe('Modules/Auth/Services/AuthService', () => {
         return expect(service.register(body)).resolves.toEqual(expected);
     });
 
-    it('should get user not found error', () => {
-        //
-        // https://blog.bguiz.com/2017/mocking-chained-apis-jest/
-        const mockSetMsg = jest.fn().mockReturnThis();
-        const mockSetData = jest.fn().mockReturnThis();
-        const mockSetStatusCode = jest.fn().mockReturnThis();
-        const mockAppError = {
-            setMsg: mockSetMsg,
-            setData: mockSetData,
-            setStatusCode: mockSetStatusCode
-        };
-
-        const spyBuilder = jest.spyOn(errorBuilder, 'default').mockReturnValue(mockAppError);
-
-        const result = service.getUserNotFoundError();
-        expect(result).toEqual(mockAppError);
-
-        expect(spyBuilder).toHaveBeenCalledWith('app');
-        expect(mockSetMsg).toHaveBeenCalledWith('User not found');
-        expect(mockSetData).toHaveBeenCalledWith({eType: 'notFound', eDetail: 'userNotFound'});
-        expect(mockSetStatusCode).toHaveBeenCalledWith(404);        
-    });
+    
 });

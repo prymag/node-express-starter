@@ -48,7 +48,7 @@ describe('Modules/User/Services/UserService', () => {
             email: 'test@mail.com',
             password: 'abc'
         };
-
+        
         return expect(service.encryptPassword(body)).rejects.toBeInstanceOf(Error.ValidationError);      
     });
 
