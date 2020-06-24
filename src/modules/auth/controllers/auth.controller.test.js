@@ -85,6 +85,11 @@ describe('@modules/auth/controllers/auth.controller', () => {
             }
         };
         const mockSetCookie = jest.fn().mockImplementation((name, token, opts) => {});
+        const mockSetCookieOpts = {
+            httpOnly: true,
+            sameSite: true,
+            signed: true
+        };
         const res = {
             status: mockSetStatus,
             json: mockJson,
@@ -111,7 +116,7 @@ describe('@modules/auth/controllers/auth.controller', () => {
         expect(result).toEqual(expectedResponse);
         expect(mockToJson).toHaveBeenCalled();
         expect(token.signJWT).toHaveBeenCalled();
-        expect(mockSetCookie).toHaveBeenCalledWith('token', mockToken,  {httpOnly: true});
+        expect(mockSetCookie).toHaveBeenCalledWith('access_token', mockToken,  mockSetCookieOpts);
         expect(next).not.toHaveBeenCalled();
     });
 

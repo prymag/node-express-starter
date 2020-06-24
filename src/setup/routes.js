@@ -2,11 +2,15 @@ import UserRoutes from '@modules/user/user.routes';
 import AuthRoutes from '@modules/auth/auth.routes';
 import {jwtVerify} from '@core/middlewares/jwt-verify';
 
+function defaultRoute(req, res) {
+    return res.json({});
+}
+
 export default function(app) {
     // 
-    console.log('Setting up routes...');
+    console.info('Setting up routes...');
     try {
-        app.get('/', (req, res) => res.json({}));
+        app.get('/', defaultRoute);
         app.use('', AuthRoutes);
         app.use('/users', jwtVerify, UserRoutes);
     } catch (e) {

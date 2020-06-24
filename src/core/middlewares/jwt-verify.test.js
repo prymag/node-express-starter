@@ -17,9 +17,8 @@ describe('@core/middlewares/jwt-verify', () => {
     it('Should verify user', (done) => {
         //
         expect.assertions(2);
-        const req = {
-            cookies: {token: 'samplevalidtoken'}
-        };
+        // `token` property is provided by the 'express-bearer-token' package
+        const req = {token :'validtoken'};
         const res = {};
 
         const expectedUser = {
@@ -46,8 +45,8 @@ describe('@core/middlewares/jwt-verify', () => {
    it('Should call next on error', () => {
         //
         expect.assertions(1);
-        
-        const req = {cookies: {token :'invalidtoken'}};
+        // `token` property is provided by the 'express-bearer-token' package
+        const req = {token :'invalidtoken'};
         const res = {};
 
         const mockError = new Error('Mock Invalid jwt');
@@ -64,7 +63,8 @@ describe('@core/middlewares/jwt-verify', () => {
         //
         const mockError = new Error('Cannot find user');
 
-        const req = {cookies: {token :'validtoken'}};
+        // `token` property is provided by the 'express-bearer-token' package
+        const req = {token :'validtoken'};
         const res = {};
 
         // next function is inside the catch block
@@ -89,11 +89,12 @@ describe('@core/middlewares/jwt-verify', () => {
 
         const next = jest.fn();
         
-        const mockSetTitle = jest.fn().mockReturnThis();
+        const mockSetMsg = jest.fn().mockReturnThis();
         const mockSetStatusCode = jest.fn().mockReturnThis();
 
         AppError.mockReturnValue({
-            setTitle: mockSetTitle,
+            constructor: jest.fn().mockReturnThis(),
+            setMsg: mockSetMsg,
             setStatusCode: mockSetStatusCode
         });
         
@@ -101,7 +102,7 @@ describe('@core/middlewares/jwt-verify', () => {
 
         expect(next).toHaveBeenCalled();
         expect(AppError).toHaveBeenCalled();
-        expect(mockSetTitle).toHaveBeenCalledWith('Unauthorized');
+        expect(mockSetMsg).toHaveBeenCalledWith('Unauthorized');
         expect(mockSetStatusCode).toHaveBeenCalledWith(HttpStatus.UNAUTHORIZED);
     });
 

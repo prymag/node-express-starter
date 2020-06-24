@@ -5,12 +5,14 @@ export default function(app) {
     const port = process.env.SERVER_PORT || 3000;
     
     app.listen(port, (err) => {
+        //
         if (err) {
             console.error(`App Error: ${err}`);
         } else {
-            console.log(`App is listening at: http://localhost:${port}`)
+            console.log(`App is listening at: http://localhost:${port}`);
         }
     });
 
+    // Error handler should be the last middleware to be loaded.
     app.use(ErrorHandler);
 }
