@@ -1,6 +1,7 @@
 import express from "express";
 import cookieparser from "cookie-parser";
 import expressBearerToken from "express-bearer-token";
+import cors from "cors";
 
 function setupBearerToken(app) {
     //
@@ -22,7 +23,7 @@ export default function(app) {
     console.info('Setting up middlewares...');
     try {
         //
-
+        app.use(cors());
         app.use(express.json());
         setupBearerToken(app);
     } catch (e) {
