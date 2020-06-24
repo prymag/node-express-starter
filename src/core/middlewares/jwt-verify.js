@@ -5,11 +5,11 @@ import HttpStatus from "http-status-codes";
 
 function jwtVerify(req, res, next) {
     //
-    const token = req.cookies.token;
+    const token = req.token;
     
     if (!token) {
-        const err = AppError()
-            .setTitle('Unauthorized')
+        const err = new AppError()
+            .setMsg('Unauthorized')
             .setStatusCode(HttpStatus.UNAUTHORIZED);
         return next(err);
     }

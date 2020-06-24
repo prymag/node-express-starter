@@ -4,6 +4,6 @@ export default function() {
     //
     const result = dotenv.config();
     if (result.error) {
-        console.error(result.error);
+        console.error(`DotEnv Error: ${result.error}`);
     }
 }

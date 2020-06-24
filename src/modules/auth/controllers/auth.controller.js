@@ -30,7 +30,12 @@ class AuthController {
                 delete user.password;
 
                 const token = signJWT(user);
-                res.cookie('token', token, {httpOnly: true});
+                const cookieOpts = {
+                    httpOnly: true,
+                    signed: true,
+                    sameSite: true
+                };
+                res.cookie('access_token', token, cookieOpts);
 
                 return response.success(res, {user, token});
             })

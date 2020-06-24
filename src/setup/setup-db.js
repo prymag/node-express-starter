@@ -15,6 +15,6 @@ export default async function() {
         const db = new MongooseDB(process.env.MONGO_CONNECTION_STR || dbConStr, dbOpts);
         const connection = await db.start();
     } catch (e) {
-        console.error(e);
+        console.error(`Setup DB Error: ${e}`);
     }
 }

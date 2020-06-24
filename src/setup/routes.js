@@ -10,6 +10,6 @@ export default function(app) {
         app.use('', AuthRoutes);
         app.use('/users', jwtVerify, UserRoutes);
     } catch (e) {
-        console.error(e);
+        console.error(`Routes Setup Error: ${e}`);
     }
 }
